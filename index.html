@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tienda Online - Compra Ahora</title>
+    <style>
+        body {
+            font-family: Arial;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        
+        .header {
+            background-color: #ff6600;
+            padding: 10px;
+            color: white;
+        }
+        
+        .nav {
+            background-color: #333;
+            padding: 5px;
+        }
+        
+        .nav a {
+            color: #666;  /* ERROR: Bajo contraste - texto gris sobre fondo oscuro */
+            text-decoration: none;
+            padding: 5px 10px;
+        }
+        
+        .main-content {
+            padding: 20px;
+        }
+        
+        .product {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+        }
+        
+        .product img {
+            width: 200px;
+            height: 150px;
+        }
+        
+        .price {
+            color: red;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+        
+        /* ERROR: Hover sin cambio visible */
+        .btn:hover {
+            background-color: #45a049;
+        }
+        
+        input[type="text"] {
+            padding: 5px;
+            border: 1px solid #ccc;
+        }
+        
+        .footer {
+            background-color: #222;
+            color: #888;  /* ERROR: Bajo contraste */
+            padding: 20px;
+            text-align: center;
+            font-size: 11px;  /* ERROR: Texto muy pequeño */
+        }
+        
+        /* ERROR: Links sin indicador de que son clickeables */
+        .footer a {
+            color: #666;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- ERROR: Falta landmark principal -->
+    <div class="header">
+        <h1>TiendaOnline.com</h1>
+        <p>¡Las mejores ofertas aquí!</p>
+    </div>
+    
+    <!-- ERROR: Nav sin aria-label o role -->
+    <div class="nav">
+        <a href="#">Inicio</a>
+        <a href="#">Productos</a>
+        <a href="#">Ofertas</a>
+        <a href="#">Contacto</a>
+    </div>
+    
+    <div class="main-content">
+        <!-- ERROR: Heading hierarchy saltada (h1 → h3) -->
+        <h3>Productos Destacados</h3>
+        
+        <!-- ERROR: Formulario sin label asociado -->
+        <div style="margin-bottom: 20px;">
+            <input type="text" placeholder="Buscar productos...">
+            <!-- ERROR: Botón sin texto descriptivo -->
+            <button class="btn">🔍</button>
+        </div>
+        
+        <div class="product">
+            <!-- ERROR: Imagen sin alt text -->
+            <img src="laptop.jpg">
+            <h4>Laptop SuperPro 3000</h4>
+            <p>Procesador último modelo, 16GB RAM, 512GB SSD</p>
+            <div class="price">$999</div>
+            <!-- ERROR: Botón con texto no descriptivo -->
+            <button class="btn" onclick="alert('Añadido')">Click aquí</button>
+        </div>
+        
+        <div class="product">
+            <!-- ERROR: Imagen decorativa sin alt="" -->
+            <img src="phone.jpg" alt="imagen">
+            <h4>Smartphone XYZ</h4>
+            <p>Pantalla 6.5", Cámara 48MP, Batería 5000mAh</p>
+            <div class="price">$599</div>
+            <button class="btn">Comprar</button>
+        </div>
+        
+        <!-- ERROR: Formulario de suscripción sin labels -->
+        <div style="background: #fff; padding: 20px; margin: 20px 0;">
+            <h3>Suscríbete a nuestro newsletter</h3>
+            <p>Nombre:</p>
+            <input type="text">
+            <p>Email:</p>
+            <input type="text">
+            <!-- ERROR: Input type incorrecto para email -->
+            <br><br>
+            <button class="btn">Enviar</button>
+        </div>
+        
+        <!-- ERROR: Enlace con texto no descriptivo -->
+        <p>Para más información <a href="#" style="color: blue;">haz click aquí</a></p>
+        
+        <!-- ERROR: Tabla sin headers -->
+        <h3>Comparar Productos</h3>
+        <table border="1" style="background: white; width: 100%;">
+            <tr>
+                <td>Producto</td>
+                <td>Precio</td>
+                <td>Stock</td>
+            </tr>
+            <tr>
+                <td>Laptop</td>
+                <td>$999</td>
+                <!-- ERROR: Información de stock solo con color -->
+                <td style="color: green;">Disponible</td>
+            </tr>
+            <tr>
+                <td>Smartphone</td>
+                <td>$599</td>
+                <td style="color: red;">Agotado</td>
+            </tr>
+        </table>
+        
+        <br><br>
+        
+        <!-- ERROR: Div clickeable en lugar de button/link -->
+        <div onclick="location.href='#'" style="background: orange; color: white; padding: 15px; cursor: pointer; text-align: center;">
+            ¡OFERTA ESPECIAL! Haz click para ver más
+        </div>
+    </div>
+    
+    <div class="footer">
+        <p>© 2024 TiendaOnline.com - Todos los derechos reservados</p>
+        <!-- ERROR: Links del footer sin suficiente contraste -->
+        <a href="#">Política de Privacidad</a> | 
+        <a href="#">Términos y Condiciones</a> | 
+        <a href="#">Contacto</a>
+        <p style="font-size: 9px;">Última actualización: 16/02/2026</p>
+    </div>
+    
+    <!-- ERROR: JavaScript inline sin alternativa -->
+    <script>
+        // Popup molesto sin aviso
+        setTimeout(function() {
+            alert('¡OFERTA ESPECIAL! 50% de descuento');
+        }, 3000);
+    </script>
+</body>
+</html>
