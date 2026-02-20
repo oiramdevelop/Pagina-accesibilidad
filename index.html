@@ -1,213 +1,360 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
+    <meta charset="UTF-8">
     <title>Tienda Online - Compra Ahora</title>
     <style>
         body {
-            font-family: Arial;
+            font-family: Georgia, serif;
             margin: 0;
             background-color: #f0f0f0;
         }
-        
+
+        /* FIX: Skip link para teclado */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: #000;
+            color: #fff;
+            padding: 8px;
+            z-index: 9999;
+            text-decoration: none;
+        }
+        .skip-link:focus {
+            top: 0;
+        }
+
         .header {
-            background-color: #ff6600;
+            background-color: #cc5200; /* FIX: Naranja más oscuro para mejor contraste */
             padding: 10px;
             color: white;
         }
-        
-        .nav {
+
+        /* FIX: Nav con fondo oscuro y texto blanco de alto contraste */
+        nav.nav {
             background-color: #333;
             padding: 5px;
         }
-        
-        .nav a {
-            color: #ffffff;  /* ERROR: Bajo contraste - texto gris sobre fondo oscuro */
-            text-decoration: none;
+
+        nav.nav a {
+            color: #ffffff; /* FIX: Blanco puro sobre fondo #333 → ratio 12.6:1 ✓ */
+            text-decoration: underline; /* FIX: Subrayado para indicar que son enlaces */
             padding: 5px 10px;
+            display: inline-block;
         }
-        
+
+        nav.nav a:hover,
+        nav.nav a:focus {
+            background-color: #555;
+            outline: 2px solid #fff;
+            text-decoration: underline;
+        }
+
         .main-content {
             padding: 20px;
         }
-        
+
         .product {
             background: white;
             padding: 15px;
             margin: 10px 0;
             border: 1px solid #ddd;
         }
-        
+
         .product img {
             width: 200px;
             height: 150px;
         }
-        
+
+        /* FIX: Rojo más oscuro para mejor contraste sobre blanco */
         .price {
-            color: red;
+            color: #b30000;
             font-size: 24px;
             font-weight: bold;
         }
-        
+
         .btn {
-            background-color: #4CAF50;
-            color: white;
+            background-color: #2e7d32; /* FIX: Verde más oscuro para mejor contraste */
+            color: #ffffff;
             padding: 10px 20px;
             border: none;
             cursor: pointer;
+            font-size: 1rem;
         }
-        
-        /* ERROR: Hover sin cambio visible */
-        .btn:hover {
-            background-color:#ff6600 ;
+
+        .btn:hover,
+        .btn:focus {
+            background-color: #cc5200; /* FIX: Cambio visible en hover */
+            outline: 3px solid #000; /* FIX: Indicador de foco visible */
         }
-        
-        input[type="text"] {
+
+        input[type="text"],
+        input[type="email"] {
             padding: 5px;
-            border: 1px solid #ccc;
+            border: 1px solid #555; /* FIX: Borde más oscuro para mejor contraste */
         }
-        
-        .footer {
+
+        input:focus {
+            outline: 3px solid #2e7d32;
+        }
+
+        /* FIX: Footer con color de texto de alto contraste */
+        footer.footer {
             background-color: #222;
-            color: #fdfafa;  /* ERROR: Bajo contraste */
+            color: #ffffff; /* FIX: Blanco sobre #222 → ratio 18.1:1 ✓ */
             padding: 20px;
             text-align: center;
-            font-size: 12px; 
+            font-size: 14px; /* FIX: Tamaño mínimo legible */
         }
-        
-        /* ERROR: Links sin indicador de que son clickeables */
-        .footer a {
-            color: #666;
-            text-decoration: none;
+
+        /* FIX: Links del footer visibles y con buen contraste */
+        footer.footer a {
+            color: #90caf9; /* FIX: Azul claro sobre fondo oscuro → ratio 6.5:1 ✓ */
+            text-decoration: underline;
+        }
+
+        footer.footer a:hover,
+        footer.footer a:focus {
+            color: #ffffff;
+            outline: 2px solid #fff;
+        }
+
+        /* Stock badges */
+        .stock-disponible {
+            color: #1b5e20;
+            font-weight: bold;
+        }
+        .stock-disponible::before {
+            content: "✓ "; /* FIX: Indicador no solo con color */
+        }
+        .stock-agotado {
+            color: #b71c1c;
+            font-weight: bold;
+        }
+        .stock-agotado::before {
+            content: "✗ "; /* FIX: Indicador no solo con color */
+        }
+
+        table {
+            background: white;
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #555;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #333;
+            color: #fff;
+        }
+
+        /* Popup */
+        #popup-oferta {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #1b5e20;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+            z-index: 1000;
+            max-width: 280px;
+        }
+
+        #popup-oferta button {
+            margin-top: 10px;
+            padding: 6px 12px;
+            cursor: pointer;
+            background: #fff;
+            color: #1b5e20;
+            border: 2px solid #1b5e20;
+            font-weight: bold;
+        }
+
+        #popup-oferta button:focus {
+            outline: 3px solid #fff;
         }
     </style>
 </head>
 <body>
-    <!-- ERROR: Falta landmark principal -->
+
+    <!-- FIX: Skip link para usuarios de teclado -->
+    <a href="#contenido-principal" class="skip-link">Saltar al contenido principal</a>
+
+    <!-- FIX: <header> semántico en lugar de <div> -->
     <header class="header">
         <h1>TiendaOnline.com</h1>
         <p>¡Las mejores ofertas aquí!</p>
     </header>
-        
-    
-    <!-- ERROR: Nav sin aria-label o role -->
-    <div class="nav">
-        <a href="#" role="button">Inicio</a>
-        <a href="#" role="button">Productos</a>
-        <a href="#" role="button">Ofertas</a>
-        <a href="#" role="button">Contacto</a>
-    </div>
-    
-    <div class="main-content">
-        <h1>Productos Destacados</h1>
-        
-        <label>
-        <div style="margin-bottom: 20px;">
-            <input type="text" placeholder="Buscar productos...">
-            <!-- ERROR: Botón sin texto descriptivo -->
-            <button class="btn" alt >🔍</button>
-        </div> 
-        </label>
-        
-        
-        <div class="product">>
-            <img src="laptop.jpg" alt="portatil">
-            <h4>Laptop SuperPro 3000</h4>
-            <p>Procesador último modelo, 16GB RAM, 512GB SSD</p>
-            <div class="price">$999</div>
-           
-            <button class="btn" onclick="alert('Añadido')" alt="Buton para añadir ">Añadir</button>
-        </div>
-        
-        <div class="product">
-            <img src="phone.jpg" alt="">
-            <h4>Smartphone XYZ</h4>
-            <p>Pantalla 6.5", Cámara 48MP, Batería 5000mAh</p>
-            <div class="price">$599</div>
-            <button class="btn">Comprar</button>
-        </div>
-        
-       <label>
-         <div style="background: #fff; padding: 20px; margin: 20px 0;">
-            <h3>Suscríbete a nuestro newsletter</h3>
-            <p>Nombre:</p>
-            <input type="text">
-            <p>Email:</p>
-            <input type="email">
 
-            <br><br>
-            <button class="btn">Enviar</button>
-        </div>
-       </label>
-        
-        
-        <!-- ERROR: Enlace con texto no descriptivo -->
-        <p>Para más información <a href="#" style="color: blue;" alt="haz click aqui para mas informacion">haz click aquí</a></p>
-        
-        
-        
-        <table border="1" style="background: white; width: 100%;">
-            <thead>
-                <h3>Comparar Productos</h3>
-            </thead>
-            <tr>
-                <td>Producto</td>
-                <td>Precio</td>
-                <td>Stock</td>
-            </tr>
-            <tr>
-                <td>Laptop</td>
-                <td>$999</td>
-                <!-- ERROR: Información de stock solo con color -->
-                <td style="color: green;">Disponible</td>
-            </tr>
-            <tr>
-                <td>Smartphone</td>
-                <td>$599</td>
-                <td style="color: red;">Agotado</td>
-            </tr>
-            
-        </table>
-        
-        <br><br>
-        
-
-        <button onclick="location.href='#'" style="background: orange; color: white; padding: 15px; cursor: pointer; text-align: center;">
-            ¡OFERTA ESPECIAL! Haz click para ver más
-        </div>
-    </div>
-    
-    <div class="footer">
-        <p>© 2024 TiendaOnline.com - Todos los derechos reservados</p>
-        <a href="#">Política de Privacidad</a> | 
-        <a href="#">Términos y Condiciones</a> | 
+    <!-- FIX: <nav> semántico con aria-label descriptivo -->
+    <nav class="nav" aria-label="Navegación principal">
+        <!-- FIX: Son enlaces, no buttons. Quitado role="button" incorrecto -->
+        <a href="#">Inicio</a>
+        <a href="#">Productos</a>
+        <a href="#">Ofertas</a>
         <a href="#">Contacto</a>
-        <p style="font-size: 9px;">Última actualización: 16/02/2026</p>
-    </div>
-    
-    <div id="popup-oferta" role="dialog" aria-modal="true" aria-label="Oferta especial" style="
-    display: none;
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: #2d6a4f;
-    color: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-    z-index: 1000;
-    max-width: 280px;
-">
-    <p>🎉 ¡OFERTA ESPECIAL! 50% de descuento</p>
-    <button onclick="document.getElementById('popup-oferta').style.display='none'"
-            style="margin-top: 10px; padding: 6px 12px; cursor: pointer;">
-        Cerrar
-    </button>
-</div>
+    </nav>
 
-<script>
-    setTimeout(function() {
-        document.getElementById('popup-oferta').style.display = 'block';
-    }, 3000);
-</script>
+    <!-- FIX: <main> landmark para contenido principal -->
+    <main class="main-content" id="contenido-principal">
+
+        <!-- FIX: Jerarquía de headings correcta (no saltar de h1 a h4) -->
+        <h2>Productos Destacados</h2>
+
+        <!-- FIX: label vinculada correctamente al input con for/id -->
+        <div style="margin-bottom: 20px;" role="search">
+            <label for="buscador">Buscar productos</label><br>
+            <input type="text" id="buscador" name="buscador" placeholder="Ej: laptop, smartphone...">
+            <!-- FIX: Botón con aria-label descriptivo -->
+            <button class="btn" aria-label="Buscar productos">🔍 Buscar</button>
+        </div>
+
+        <!-- Producto 1 -->
+        <article class="product">
+            <!-- FIX: alt descriptivo y útil -->
+            <img src="laptop.jpg" alt="Laptop SuperPro 3000 - portátil negro con pantalla encendida">
+            <h3>Laptop SuperPro 3000</h3>
+            <p>Procesador último modelo, 16GB RAM, 512GB SSD</p>
+            <div class="price" aria-label="Precio: 999 dólares">$999</div>
+            <!-- FIX: Quitado alert() bloqueante, texto de botón descriptivo, eliminado atributo alt incorrecto en button -->
+            <button class="btn" aria-label="Añadir Laptop SuperPro 3000 al carrito">Añadir al carrito</button>
+        </article>
+
+        <!-- Producto 2 -->
+        <article class="product">
+            <!-- FIX: alt no vacío cuando la imagen es informativa -->
+            <img src="phone.jpg" alt="Smartphone XYZ - teléfono negro frontal">
+            <h3>Smartphone XYZ</h3>
+            <p>Pantalla 6.5", Cámara 48MP, Batería 5000mAh</p>
+            <div class="price" aria-label="Precio: 599 dólares">$599</div>
+            <button class="btn" aria-label="Comprar Smartphone XYZ">Comprar</button>
+        </article>
+
+        <!-- FIX: Formulario newsletter con labels correctas -->
+        <section aria-labelledby="newsletter-titulo" style="background: #fff; padding: 20px; margin: 20px 0;">
+            <h3 id="newsletter-titulo">Suscríbete a nuestro newsletter</h3>
+
+            <label for="nombre-newsletter">Nombre:</label><br>
+            <input type="text" id="nombre-newsletter" name="nombre" autocomplete="name"><br><br>
+
+            <label for="email-newsletter">Email:</label><br>
+            <input type="email" id="email-newsletter" name="email" autocomplete="email"><br><br>
+
+            <button class="btn" aria-label="Enviar suscripción al newsletter">Enviar</button>
+        </section>
+
+        <!-- FIX: Texto descriptivo en el enlace, eliminado atributo alt incorrecto -->
+        <p>Para más información <a href="#">consulta nuestra página de información</a></p>
+
+        <!-- FIX: Tabla con thead, th y caption correctos -->
+        <table aria-label="Comparativa de productos">
+            <caption><h3>Comparar Productos</h3></caption>
+            <thead>
+                <tr>
+                    <!-- FIX: th con scope para asociar correctamente columnas -->
+                    <th scope="col">Producto</th>
+                    <th scope="col">Precio</th>
+                    <th scope="col">Stock</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Laptop</td>
+                    <td>$999</td>
+                    <!-- FIX: Stock no solo indicado con color, se añade texto e icono -->
+                    <td><span class="stock-disponible">Disponible</span></td>
+                </tr>
+                <tr>
+                    <td>Smartphone</td>
+                    <td>$599</td>
+                    <td><span class="stock-agotado">Agotado</span></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <br>
+
+        <!-- Etiqueta de cierre correcta (era </div>), texto descriptivo -->
+        <button
+            onclick="location.href='#'"
+            style="background: #cc5200; color: white; padding: 15px; cursor: pointer; border: none; font-size: 1rem;"
+            aria-label="Ver oferta especial">
+            ¡OFERTA ESPECIAL! Ver más
+        </button>
+
+    </main>
+
+    <!--<footer> semántico -->
+    <footer class="footer">
+        <p>© 2024 TiendaOnline.com - Todos los derechos reservados</p>
+        <nav aria-label="Enlaces legales">
+            <a href="#">Política de Privacidad</a> |
+            <a href="#">Términos y Condiciones</a> |
+            <a href="#">Contacto</a>
+        </nav>
+        <!-- FIX: Tamaño de texto mínimo legible (eliminado 9px) -->
+        <p style="font-size: 12px;">Última actualización: 16/02/2026</p>
+    </footer>
+
+    <!--Popup accesible con role, aria-modal y foco gestionado -->
+    <div
+        id="popup-oferta"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="popup-titulo"
+        aria-describedby="popup-desc">
+        <p id="popup-titulo"><strong>🎉 Oferta Especial</strong></p>
+        <p id="popup-desc">¡50% de descuento en productos seleccionados!</p>
+        <button onclick="cerrarPopup()" aria-label="Cerrar oferta especial">Cerrar</button>
+    </div>
+
+    <!-- FIX: lang añadido en <html>, sin alert() bloqueante, foco gestionado al abrir popup -->
+    <script>
+        var popupAbierto = false;
+
+        setTimeout(function() {
+            var popup = document.getElementById('popup-oferta');
+            popup.style.display = 'block';
+            popupAbierto = true;
+            // FIX: Mover el foco al popup al abrirse
+            popup.querySelector('button').focus();
+        }, 3000);
+
+        function cerrarPopup() {
+            var popup = document.getElementById('popup-oferta');
+            popup.style.display = 'none';
+            popupAbierto = false;
+        }
+
+        // Cerrar popup con Escape
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && popupAbierto) {
+                cerrarPopup();
+            }
+        });
+
+        //  Botones de "Añadir al carrito" sin alert() bloqueante
+        document.querySelectorAll('.btn[aria-label^="Añadir"]').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                var producto = this.getAttribute('aria-label').replace('Añadir ', '').replace(' al carrito', '');
+                var aviso = document.createElement('p');
+                aviso.setAttribute('role', 'status');
+                aviso.setAttribute('aria-live', 'polite');
+                aviso.textContent = producto + ' añadido al carrito.';
+                aviso.style.color = '#1b5e20';
+                aviso.style.fontWeight = 'bold';
+                this.insertAdjacentElement('afterend', aviso);
+                setTimeout(function() { aviso.remove(); }, 3000);
+            });
+        });
+    </script>
 </body>
 </html>
