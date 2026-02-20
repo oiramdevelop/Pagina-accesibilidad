@@ -21,7 +21,7 @@
         }
         
         .nav a {
-            color: #ffffff;  /* ERROR: Bajo contraste - texto gris sobre fondo oscuro */
+            color: #666;  /* ERROR: Bajo contraste - texto gris sobre fondo oscuro */
             text-decoration: none;
             padding: 5px 10px;
         }
@@ -58,7 +58,7 @@
         
         /* ERROR: Hover sin cambio visible */
         .btn:hover {
-            background-color:#ff6600 ;
+            background-color: #45a049;
         }
         
         input[type="text"] {
@@ -68,10 +68,10 @@
         
         .footer {
             background-color: #222;
-            color: #fdfafa;  /* ERROR: Bajo contraste */
+            color: #888;  /* ERROR: Bajo contraste */
             padding: 20px;
             text-align: center;
-            font-size: 12px; 
+            font-size: 11px;  /* ERROR: Texto muy pequeño */
         }
         
         /* ERROR: Links sin indicador de que son clickeables */
@@ -83,72 +83,67 @@
 </head>
 <body>
     <!-- ERROR: Falta landmark principal -->
-    <header class="header">
+    <div class="header">
         <h1>TiendaOnline.com</h1>
         <p>¡Las mejores ofertas aquí!</p>
-    </header>
-        
+    </div>
     
     <!-- ERROR: Nav sin aria-label o role -->
     <div class="nav">
-        <a href="#" role="button">Inicio</a>
-        <a href="#" role="button">Productos</a>
-        <a href="#" role="button">Ofertas</a>
-        <a href="#" role="button">Contacto</a>
+        <a href="#">Inicio</a>
+        <a href="#">Productos</a>
+        <a href="#">Ofertas</a>
+        <a href="#">Contacto</a>
     </div>
     
     <div class="main-content">
-        <h1>Productos Destacados</h1>
+        <!-- ERROR: Heading hierarchy saltada (h1 → h3) -->
+        <h3>Productos Destacados</h3>
         
-        <label>
+        <!-- ERROR: Formulario sin label asociado -->
         <div style="margin-bottom: 20px;">
             <input type="text" placeholder="Buscar productos...">
             <!-- ERROR: Botón sin texto descriptivo -->
-            <button class="btn" alt >🔍</button>
-        </div> 
-        </label>
-        
-        
-        <div class="product">>
-            <img src="laptop.jpg" alt="portatil">
-            <h4>Laptop SuperPro 3000</h4>
-            <p>Procesador último modelo, 16GB RAM, 512GB SSD</p>
-            <div class="price">$999</div>
-           
-            <button class="btn" onclick="alert('Añadido')" alt="Buton para añadir ">Añadir</button>
+            <button class="btn">🔍</button>
         </div>
         
         <div class="product">
-            <img src="phone.jpg" alt="">
+            <!-- ERROR: Imagen sin alt text -->
+            <img src="laptop.jpg">
+            <h4>Laptop SuperPro 3000</h4>
+            <p>Procesador último modelo, 16GB RAM, 512GB SSD</p>
+            <div class="price">$999</div>
+            <!-- ERROR: Botón con texto no descriptivo -->
+            <button class="btn" onclick="alert('Añadido')">Click aquí</button>
+        </div>
+        
+        <div class="product">
+            <!-- ERROR: Imagen decorativa sin alt="" -->
+            <img src="phone.jpg" alt="imagen">
             <h4>Smartphone XYZ</h4>
             <p>Pantalla 6.5", Cámara 48MP, Batería 5000mAh</p>
             <div class="price">$599</div>
             <button class="btn">Comprar</button>
         </div>
         
-       <label>
-         <div style="background: #fff; padding: 20px; margin: 20px 0;">
+        <!-- ERROR: Formulario de suscripción sin labels -->
+        <div style="background: #fff; padding: 20px; margin: 20px 0;">
             <h3>Suscríbete a nuestro newsletter</h3>
             <p>Nombre:</p>
             <input type="text">
             <p>Email:</p>
-            <input type="email">
-
+            <input type="text">
+            <!-- ERROR: Input type incorrecto para email -->
             <br><br>
             <button class="btn">Enviar</button>
         </div>
-       </label>
-        
         
         <!-- ERROR: Enlace con texto no descriptivo -->
-        <p>Para más información <a href="#" style="color: blue;" alt="haz click aqui para mas informacion">haz click aquí</a></p>
+        <p>Para más información <a href="#" style="color: blue;">haz click aquí</a></p>
         
-        
-        
+        <!-- ERROR: Tabla sin headers -->
+        <h3>Comparar Productos</h3>
         <table border="1" style="background: white; width: 100%;">
-            <thead>
-                <h3>Comparar Productos</h3>
-            </thead>
             <tr>
                 <td>Producto</td>
                 <td>Precio</td>
@@ -165,49 +160,31 @@
                 <td>$599</td>
                 <td style="color: red;">Agotado</td>
             </tr>
-            
         </table>
         
         <br><br>
         
-
-        <button onclick="location.href='#'" style="background: orange; color: white; padding: 15px; cursor: pointer; text-align: center;">
+        <!-- ERROR: Div clickeable en lugar de button/link -->
+        <div onclick="location.href='#'" style="background: orange; color: white; padding: 15px; cursor: pointer; text-align: center;">
             ¡OFERTA ESPECIAL! Haz click para ver más
         </div>
     </div>
     
     <div class="footer">
         <p>© 2024 TiendaOnline.com - Todos los derechos reservados</p>
+        <!-- ERROR: Links del footer sin suficiente contraste -->
         <a href="#">Política de Privacidad</a> | 
         <a href="#">Términos y Condiciones</a> | 
         <a href="#">Contacto</a>
         <p style="font-size: 9px;">Última actualización: 16/02/2026</p>
     </div>
     
-    <div id="popup-oferta" role="dialog" aria-modal="true" aria-label="Oferta especial" style="
-    display: none;
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: #2d6a4f;
-    color: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-    z-index: 1000;
-    max-width: 280px;
-">
-    <p>🎉 ¡OFERTA ESPECIAL! 50% de descuento</p>
-    <button onclick="document.getElementById('popup-oferta').style.display='none'"
-            style="margin-top: 10px; padding: 6px 12px; cursor: pointer;">
-        Cerrar
-    </button>
-</div>
-
-<script>
-    setTimeout(function() {
-        document.getElementById('popup-oferta').style.display = 'block';
-    }, 3000);
-</script>
+    <!-- ERROR: JavaScript inline sin alternativa -->
+    <script>
+        // Popup molesto sin aviso
+        setTimeout(function() {
+            alert('¡OFERTA ESPECIAL! 50% de descuento');
+        }, 3000);
+    </script>
 </body>
 </html>
